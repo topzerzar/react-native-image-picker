@@ -47,11 +47,12 @@ class ImagePicker extends Component {
       maxHeight: 500,
       storageOptions: {
         skipBackup: true,
+        path: 'images',
       },
     };
 
     ImgPicker.showImagePicker(options, (response) => {
-      console.log(`Response: ${response}`);
+      console.log(`Response: ${response.uri}`);
 
       if (response.didCancel) {
         console.log('User cancelled photo picker');
@@ -99,7 +100,7 @@ class ImagePicker extends Component {
           <View style={[styles.avatar, styles.avatarContainer]}>
             {this.state.avatarSource === null
               ? <Text>Select a Photo</Text>
-              : <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+              : <Image source={this.state.avatarSource} style={styles.avatar} />
             }
           </View>
         </TouchableOpacity>
