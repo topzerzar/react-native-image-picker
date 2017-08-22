@@ -1,0 +1,22 @@
+{
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
+  "rules": {
+    "class-methods-use-this": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "react/prefer-stateless-function": "off",
+    "react/require-extension": "off", // this rule is deprecated but comes with airbnb
+    "eol-last": "off",
+    "react/prop-types": ["off"]
+  }
+}
