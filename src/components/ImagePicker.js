@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   View,
   Image,
+  Text,
   PixelRatio,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 
@@ -38,7 +40,7 @@ class ImagePicker extends Component {
     };
   }
 
-  selectPhotoTapped() {
+  selectPhotoTapped = () => {
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -67,7 +69,7 @@ class ImagePicker extends Component {
     });
   }
 
-  selectVedioTapped() {
+  selectVedioTapped = () => {
     const options = {
       title: 'Video Picker',
       takePhotoButtonTitle: 'Take Video...',
@@ -77,13 +79,43 @@ class ImagePicker extends Component {
 
     ImgPicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancell video picker');
+      } else if (response.error) {
+        console.log('User tapped custom button: ', response.error);
+      } else {
+        this.setState({
+          videoSource: response.uri,
+        });
+      }
     });
   }
 
   render() {
     return (
-      <View>
-        <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.selectPhotoTapped}>
+          <View style={[styles.avatar, styles.avatarContainer]}>
+            {this.state.avatarSource === null
+              ? <Text>Select a Photo</Text>
+              : <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+            }
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.selectVedioTapped}>
+          <View style={[styles.avatar, styles.avatarContainer]}>
+            <Text>Select a Video</Text>
+          </View>
+        </TouchableOpacity>
+
+        { this.state.videoSource &&
+          <Text style={{ margin: 8, textAlign: 'center' }}>
+            {this.state.videoSource}
+          </Text>
+
+        }
       </View>
     );
   }
